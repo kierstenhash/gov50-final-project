@@ -1,6 +1,6 @@
 ---
 title: "Gov 50 Final Project"
-author: "Your Name Here"
+author: "Kiersten Hash"
 description: "My final project"
 output:
   distill::distill_article:
@@ -11,4 +11,4 @@ output:
 
 ## Project thoughts
 
-I am interested in exploring data related to...
+For my final project I plan to analyze the impact of residential segregation on public health outcomes in environmental justice communities. This analysis will consider race, ethnicity, and income over spatial and temporal contexts.
