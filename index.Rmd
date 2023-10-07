@@ -11,4 +11,4 @@ output:
 
 ## Project thoughts
 
-For my final project I plan to analyze the impact of residential segregation on public health outcomes in environmental justice communities. This analysis will consider race, ethnicity, and income over spatial and temporal contexts.
+For my final project I plan to analyze the impact of residential segregation on public health outcomes in environmental justice communities. This analysis will consider race, ethnicity, and income over spatial and temporal contexts. 
