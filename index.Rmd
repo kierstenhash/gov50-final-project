@@ -39,3 +39,48 @@ new_navco |>
   scale_fill_manual(values = c("Successful" = "#DAF7A6", "Unsuccessful" = "#C70039"))
 ```
 This graph demonstrates the relative success of nonviolent and violent campaigns in the NAVCO 1.3 dataset. This data was the primary takeaway that the researchers reported on in their findings which was foundational in political science literature about different forms of conflict.
+
+Milestone Four - Analysis Attempt:
+
+```{r}
+library(dplyr)
+
+## Creating a new variable to delineate the types of motivators for the conflict.
+
+milestone4 <- navco |>
+  mutate(Conflict_Type = case_when(
+    FSELFDET == 1  ~ "FSELFDET", 
+    REGCHANGE == 1 ~ "REGCHANGE",
+    SECESSION == 1 ~ "SECESSION",
+    OTHER == 1 ~ "OTHER"
+  ))
+
+milestone4
+```
+
+```{r}
+## Calculate the averages of success for each type.
+
+ms4tibble <- milestone4 |>
+  group_by(Conflict_Type) |>
+  summarize(avg_success = mean(SUCCESS, na.rm = TRUE)) |>
+  arrange(desc(avg_success)) |>
+  drop_na()
+  
+ms4tibble
+```
+
+```{r}
+## Visualization of the success averages
+
+library(ggplot2)
+
+ms4graph <- ms4tibble |>
+  ggplot(ms4tibble, mapping = aes(
+    x = reorder(Conflict_Type, -avg_success), y = avg_success, fill = Conflict_Type)) +
+  geom_bar(stat = "identity") + labs(x = "Type of Conflict", y = "Average Success Rate") + 
+  scale_fill_manual(values = c("FSELFDET" = "cyan", "REGCHANGE" = "green", "SECESSION" = "pink", "OTHER" = "purple"))
+
+ms4graph
+```
+This data analysis and visualization demonstrates that the highest to lowest success rates go from regime change, self determination, "other", and secession. This finding disproves my hypothesis but is a really interesting finding.
