@@ -70,6 +70,7 @@ new_navco |>
   labs(x = "Type of Conflict", y = "Number of Campaigns", title = "Relative Success of Nonviolent and Violent Campaigns") +
   scale_fill_manual(values = c("Successful" = "#DAF7A6", "Unsuccessful" = "#C70039"))
 ```
+
 This graph demonstrates the relative success of nonviolent and violent campaigns in the NAVCO 1.3 dataset. This data was the primary takeaway that the researchers reported on in their findings which was foundational in political science literature about different forms of conflict.
 
 Milestone Four - Analysis Attempt:
