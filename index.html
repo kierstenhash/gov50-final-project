@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js","NAVCO 1.3 List Final Project.csv"]}
+  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-1-1.png","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/figure-html5/unnamed-chunk-6-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js","NAVCO 1.3 List Final Project.csv"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1517,6 +1517,15 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 
 <div class="d-article">
+<p>##Final Report</p>
+<p>Introduction
+For my final project, I analyze nonviolent and violent political movements to assess the relative success of movements that are fought for self-determination, regime changes, or secession. My research question is “Which types nonviolent and violent political movements are most successful - movements for self determination, regime change, or secession?” I find this topic incredibly interesting as the findings from the authors who created this data set have been crucial in shaping knowledge about the strategies and successes of varying types of resistance movements. This topic is also important because I feel that often International Relations tends to gloss over some of the historical trends behind certain global phenomena, particularly the differences in anticolonial movements and conflicts of other types. I hope to uncover which motives have the most success both for violence or nonviolence in movements.</p>
+<p>Data Set
+The dataset that I am using for this analysis is The Nonviolent and Violent Campaigns and Outcomes (NAVCO) data project, which comes from the Harvard Weatherhead Center for International Affairs and specifically from Chenoweth. This data covers 622 maximalist campaigns from 1900-2019 that seek to to overthrow an incumbent government, expel a foreign occupation, or secede. In my analysis, I want to build on the findings of Maria Stephan and Erica Chenoweth who published “Why Civil Resistance Works: The Strategic Logic of Nonviolent Conflict” in 2008 and found through their original dataset that nonviolent campaigns have been more successful than armed campaigns generally. This is due to increased legitimacy, more widespread support, and neutralize the opponent’s forces. The graph below demonstrates the relative success of nonviolent and violent campaigns in the NAVCO 1.3 dataset.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="index_files/figure-html5/unnamed-chunk-1-1.png" width="624" /></p>
+</div>
+<p>The explanatory variables of interest for this breaking down this analysis will be the types of movements coming from the variables FSELFDET, REGCHANGE, and SECESSION. According to the NAVCO 1.3 codebook, FSELFDET means “1=selfdetermination or independence from a foreign occupier or colonial power, 0=otherwise.” REGCHANGE means “1=removal of incumbent national leader, 0=otherwise.” SECESSION means “1=territorial secession/separatism from an existing state in a territory internationally recognized as part of the target state, 0=otherwise.” The outcome variable is the SUCCESS, LIMITED, and FAILURE variables which measure the extent to which the movement achieved its goals and demands within a year of the movement’s “peak activity.” In order to support my hypothesis, the data would demonstrate a higher average rate of success for the movements under FSELFDET in comparison to those in the other two groups. The data would not support my hypothesis if one of the other groups had a higher success rate.</p>
 <h2 id="project-thoughts">Project thoughts</h2>
 <p>For my final project, I now plan to analyze nonviolent and violent political movements to assess the relative success of movements that are fought for self-determination, regime changes, or secession.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -1548,7 +1557,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Type of Conflict"</span>, y <span class='op'>=</span> <span class='st'>"Number of Campaigns"</span>, title <span class='op'>=</span> <span class='st'>"Relative Success of Nonviolent and Violent Campaigns"</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>scale_fill_manual</a></span><span class='op'>(</span>values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Successful"</span> <span class='op'>=</span> <span class='st'>"#DAF7A6"</span>, <span class='st'>"Unsuccessful"</span> <span class='op'>=</span> <span class='st'>"#C70039"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
+<p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
 </div>
 <p>This graph demonstrates the relative success of nonviolent and violent campaigns in the NAVCO 1.3 dataset. This data was the primary takeaway that the researchers reported on in their findings which was foundational in political science literature about different forms of conflict.</p>
 <p>Milestone Four - Analysis Attempt:</p>
@@ -1620,7 +1629,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span></span>
 <span><span class='va'>ms4graph</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
+<p><img src="index_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
 </div>
 <p>This data analysis and visualization demonstrates that the highest to lowest success rates go from regime change, self determination, “other”, and secession. This finding disproves my hypothesis but is a really interesting finding.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
