@@ -33,7 +33,7 @@ new_navco2 <- navco |>
   group_by(`Use of Violence`, `Success of Conflict`) |>
   summarize(count = n())
 
-`Success of Conflict` = factor(new_navco$`Success of Conflict`)
+`Success of Conflict` = factor(new_navco2$`Success of Conflict`)
 
 new_navco2 |>
   ggplot(aes(x = factor(`Use of Violence`), y = count, fill = `Success of Conflict`)) +
@@ -165,7 +165,7 @@ Regression 3
 
 Conclusion
 
-Ultimately, this was an interesting deep dive into the data from the NAVCO 1.3 dataset. This data shows that regime change is actually more successful overall, but for violent campaigns self determination has the highest success rate. This data was 
+Ultimately, this was an interesting deep dive into the data from the NAVCO 1.3 dataset. This data shows that regime change is actually more successful overall, but for violent campaigns self determination has the highest success rate. This data was statsitically significant based on the p value but there could be confounding variables like the region that the campaign occurred in, the year it occurred in, and other potential confounders that are influencing the success of the movements. If I had more time and coding experience I would take those factors into account. Overall, I hope that this research can help contribute the growing literature that explores the nuances of success and failure in different movements.
 
 ## Project thoughts
 
