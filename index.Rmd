@@ -13,37 +13,159 @@ Introduction
 
 For my final project, I analyze nonviolent and violent political movements to assess the relative success of movements that are fought for self-determination, regime changes, or secession. My research question is “Which types nonviolent and violent political movements are most successful - movements for self determination, regime change, or secession?” I find this topic incredibly interesting as the findings from the authors who created this data set have been crucial in shaping knowledge about the strategies and successes of varying types of resistance movements. This topic is also important because I feel that often International Relations tends to gloss over some of the historical trends behind certain global phenomena, particularly the differences in anticolonial movements and conflicts of other types. I hope to uncover which motives have the most success both for violence or nonviolence in movements.
 
+In my analysis, I want to build on the findings of Maria Stephan and Erica Chenoweth who published "Why Civil Resistance Works: The Strategic Logic of Nonviolent Conflict" in 2008 and found through their original dataset that nonviolent campaigns have been more successful than armed campaigns generally. This is due to increased legitimacy, more widespread support, and neutralize the opponent's  forces. I hypothesize that movements for self determination have probably been the most successful motive generally because we saw a global phenomenon of decolonization in the latter half of the 20th century, when many countries were under colonial rule. Within those, I would like to also see if nonviolence is still more successful than violence within this sub-group of campaigns.
+
+
 Data Set
 
-The dataset that I am using for this analysis is The Nonviolent and Violent Campaigns and Outcomes (NAVCO) data project, which comes from the Harvard Weatherhead Center for International Affairs and specifically from Chenoweth. This data covers 622 maximalist campaigns from 1900-2019 that seek to to overthrow an incumbent government, expel a foreign occupation, or secede. In my analysis, I want to build on the findings of Maria Stephan and Erica Chenoweth who published "Why Civil Resistance Works: The Strategic Logic of Nonviolent Conflict" in 2008 and found through their original dataset that nonviolent campaigns have been more successful than armed campaigns generally. This is due to increased legitimacy, more widespread support, and neutralize the opponent's  forces. The graph below demonstrates the relative success of nonviolent and violent campaigns in the NAVCO 1.3 dataset.
+The dataset that I am using for this analysis is The Nonviolent and Violent Campaigns and Outcomes (NAVCO) data project, which comes from the Harvard Weatherhead Center for International Affairs and specifically from Chenoweth. This data covers 622 maximalist campaigns from 1900-2019 that seek to to overthrow an incumbent government, expel a foreign occupation, or secede. The graph below demonstrates the relative success of nonviolent and violent campaigns in the NAVCO 1.3 dataset.
 
 ```{r echo = FALSE}
 library(ggplot2)
-library(dplyr)
-
 library(tidyverse)
 library(dplyr)
+
 navco <- read_csv("NAVCO 1.3 List Final Project.csv")
 
-new_navco <- navco |>
-  mutate(V_OR_NV = if_else(VIOL == 1, "Violent", "Nonviolent")) |>
+new_navco2 <- navco |>
+  mutate(`Use of Violence` = if_else(VIOL == 1, "Violent", "Nonviolent")) |>
   mutate(`Success of Conflict` = if_else(SUCCESS == 1, "Successful", "Unsuccessful")) |>
-  group_by(V_OR_NV, `Success of Conflict`) |>
+  group_by(`Use of Violence`, `Success of Conflict`) |>
   summarize(count = n())
 
 `Success of Conflict` = factor(new_navco$`Success of Conflict`)
 
-new_navco |>
-  ggplot(aes(x = factor(V_OR_NV), y = count, fill = `Success of Conflict`)) +
-  geom_bar(stat = "identity", position = "dodge") +
+new_navco2 |>
+  ggplot(aes(x = factor(`Use of Violence`), y = count, fill = `Success of Conflict`)) +
+  geom_bar(stat = "identity", position = "dodge", width = .7, colour="white") +
   labs(x = "Type of Conflict", y = "Number of Campaigns", title = "Relative Success of Nonviolent and Violent Campaigns") +
-  scale_fill_manual(values = c("Successful" = "#DAF7A6", "Unsuccessful" = "#C70039"))
+  scale_fill_manual(values = c("Successful" = "#DAF7A6", "Unsuccessful" = "#C70039")) + 
+  theme(text=element_text(family="Times New Roman"), panel.background = element_rect(fill = 'grey'))
 ```
 
-The explanatory variables of interest for this breaking down this analysis will be the types of movements coming from the variables FSELFDET, REGCHANGE, and SECESSION. According to the NAVCO 1.3 codebook, FSELFDET means "1=selfdetermination or independence from a foreign occupier or colonial power, 0=otherwise." REGCHANGE means "1=removal of incumbent national leader, 0=otherwise." SECESSION means "1=territorial secession/separatism from an existing state in a territory internationally recognized as part of the target state, 0=otherwise." The outcome variable is the SUCCESS, LIMITED, and FAILURE variables which measure the extent to which the movement achieved its goals and demands within a year of the movement's "peak activity." In order to support my hypothesis, the data would demonstrate a higher average rate of success for the movements under FSELFDET in comparison to those in the other two groups. The data would not support my hypothesis if one of the other groups had a higher success rate.
+The explanatory variables of interest for this breaking down this analysis will be the motives of movements coming from the variables FSELFDET, REGCHANGE, SECESSION, and OTHER. According to the NAVCO 1.3 codebook, FSELFDET means "1=selfdetermination or independence from a foreign occupier or colonial power, 0=otherwise." REGCHANGE means "1=removal of incumbent national leader, 0=otherwise." SECESSION means "1=territorial secession/separatism from an existing state in a territory internationally recognized as part of the target state, 0=otherwise." The outcome variable is the SUCCESS, LIMITED, and FAILURE variables which measure the extent to which the movement achieved its goals and demands within a year of the movement's "peak activity." 
+
+To answer my question, I will compare the average success rates of each category of motive. I will do this by creating a new categorical variable to access the motive of conflict. For simplification purposes, I will use the SUCCESS variable as a binary variable (demonstrating if the campaign met all of its goals or not). I also will not include campaigns that did not fit into the three motives in my analysis (OTHER = 1).In order to support my hypothesis, the data would demonstrate a higher average rate of success for the movements under FSELFDET in comparison to those in the other two groups. The data would not support my hypothesis if one of the other groups had a higher success rate.
 
 
+Results
 
+The results of my analysis demonstrate that regime change (0.4209302) had the highest success rate, followed by self determination (0.0595238) and finally secession (0.3092784). Table 1 demonstrates these values. When broken down for nonviolence vs. violence these trends are mostly consistent, demonstrated by Table 2. For nonviolence, regime change still has the highest success rate (0.5167286), followed again by self determination	(0.2142857), and the lowest for (0.0555556). For violence, self determination has the highest success rate (0.2608696), then regime change (0.0606061), and then secession	(0.3478261).
+
+```{r include = FALSE}
+library(dplyr)
+
+## Creating new variables to delineate the types of motivators for the conflict and success of these movements.
+
+new_navco3 <- navco |>
+  select(-OTHER) |>
+  mutate(`Conflict Type` = case_when(
+    FSELFDET == 1  ~ "Self Determination", 
+    REGCHANGE == 1 ~ "Regime Change",
+    SECESSION == 1 ~ "Secession"), 
+    `Use of Violence` = if_else(VIOL == 1, "Violent", "Nonviolent"),
+    `Success of Conflict` = if_else(SUCCESS == 1, "Successful", "Unsuccessful")
+  )
+
+new_navco3
+```
+
+```{r include = FALSE}
+## Calculate the averages of success for each type.
+
+finaltibble <- new_navco3 |>
+  group_by(`Conflict Type`, `Use of Violence`) |>
+  summarize(`Success of Conflict` = mean(SUCCESS, na.rm = TRUE)) |>
+  drop_na()
+
+finaltibble
+```
+
+```{r include = FALSE}
+## Calculate the averages of success for each type.
+
+testtibble <- new_navco3 |>
+  group_by(`Conflict Type`) |>
+  summarize(`Success of Conflict` = mean(SUCCESS, na.rm = TRUE)) |>
+  drop_na()
+
+testtibble
+```
+
+```{r echo = FALSE}
+testtibble |>
+  pivot_wider(names_from = `Conflict Type`,
+              values_from = `Success of Conflict`) |>
+  knitr::kable()
+```
+Table 1
+
+``` {r echo = FALSE}
+finaltibble |>
+  pivot_wider(names_from = `Conflict Type`,
+              values_from = `Success of Conflict`) |>
+  knitr::kable()
+```
+Table 2
+
+These values are also demonstrated in the figures below:
+```{r echo = FALSE}
+testtibble |>
+  ggplot(testtibble, mapping = 
+           aes(x = reorder(`Conflict Type`, `Success of Conflict`), 
+               y = `Success of Conflict`, fill = `Conflict Type`)) +
+  geom_bar(stat = "identity", colour="white", width = 0.7) + 
+  labs(x = "Type of Conflict", y = "Average Success Rate", 
+       title = "Average Success Rate of Movements by Motive") + scale_fill_brewer(palette = 5) +
+  theme(text=element_text(family="Times New Roman"), 
+        panel.background = element_rect(fill = 'grey'))
+```
+Figure 1
+
+```{r echo = FALSE}
+## Visualization of the success averages
+
+library(ggplot2)
+
+finalgraph <- finaltibble |>
+  ggplot(finaltibble, mapping = aes(
+    x = reorder(`Conflict Type`, `Success of Conflict`), y = `Success of Conflict`, fill = `Use of Violence`)) +
+  geom_bar(stat = "identity", colour="white", width = 0.7, position = "dodge") + 
+  labs(x = "Type of Conflict", y = "Average Success Rate", 
+       title = "Average Success Rate of Nonviolent and Violent Movements by Motive") + 
+  scale_fill_brewer(palette = 4) +
+  theme(text=element_text(family="Times New Roman"), panel.background = element_rect(fill = 'grey'))
+
+finalgraph
+```
+Figure 2
+
+The linear regressions below provide insight into the statistical significance of these values. The first regression demonstrates the statistical significance of the negative relationship between violence and success in campaigns. The coefficient of this regression is -0.23696, meaning that violent campaigns were less likely to be successful than their nonviolent counterparts. The second regression demonstrates the relationship between each motive and success in campaigns. The coefficient of this regression is -0.05436 for self determination, 0.05729 for regime change, and -0.30411 for secession. The two negative coefficients demonstrate that in comparison to regime change, the self determination and secession campaigns are less inclined for success, whereas the positive regime coefficient shows that regime change is more inclined to be successful than the others. The last regression combines the categorical variables of self determination and violence, because I was interested in how self determination has the highest success for violence. The coefficient for self determination becomes positive (0.01119) and violence is slightly more negative (-0.23854). This shows that when controlling for violence, self determination does have a positive relationship with success, which opens for questions about how these two variables interact. This data is statistically significant because all of the p values are below .05.
+
+```{r echo = FALSE}
+lm(SUCCESS ~ VIOL, data = new_navco3) |>
+  summary()
+```
+Regression 1
+
+```{r echo = FALSE}
+lm(formula = SUCCESS ~ FSELFDET + REGCHANGE + SECESSION, data = new_navco3) |>
+  summary()
+```
+
+Regression 2
+
+```{r echo = FALSE}
+lm(formula = SUCCESS ~ FSELFDET + VIOL, data = new_navco3) |>
+  summary()
+```
+
+Regression 3
+
+
+Conclusion
+
+Ultimately, this was an interesting deep dive into the data from the NAVCO 1.3 dataset. This data shows that regime change is actually more successful overall, but for violent campaigns self determination has the highest success rate. This data was 
 
 ## Project thoughts
 
@@ -77,7 +199,10 @@ new_navco |>
   scale_fill_manual(values = c("Successful" = "#DAF7A6", "Unsuccessful" = "#C70039"))
 ```
 
-This graph demonstrates the relative success of nonviolent and violent campaigns in the NAVCO 1.3 dataset. This data was the primary takeaway that the researchers reported on in their findings which was foundational in political science literature about different forms of conflict.
+This graph demonstrates the relative success of nonviolent and violent campaigns in the NAVCO 1.3 dataset. This data was the primary takeaway that the researchers reported on in their findings which was foundational in political science literature about different forms of conflict. This data is statistically significant but it can be influenced by confounding factors like the length of the campaigns, regions where the campaigns were located, and other potential impacting factors. I would like to control for more of these factors if I had more time and coding expertise, but overall I hope this analysis could stem more research into the nuances of conflict and their successes.
+
+
+
 
 Milestone Four - Analysis Attempt:
 
